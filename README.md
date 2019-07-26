@@ -66,3 +66,11 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+Soma's Notes
+1. Have the basic big calendar disply with the events data hardcoded in events.js
+2. Install redux and react redux and set up a redux store and hardcode the data from events.js to events[] in the store and make sure
+   the calendar renders after deleting the events.js file
+3. Change the existing server code to return the mandatory fields, title, start and end in the same format as the hardcoded ones
+   The events can have other fields but these three are mandatory

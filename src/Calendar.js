@@ -9,6 +9,7 @@ import EventForm from "./EventForm";
 import { showEventDetails, populate } from './store'
 import AppBar from '@material-ui/core/AppBar';
 import EventDetails from "./EventDetails";
+import Button from '@material-ui/core/Button';
 
 const localizer = globalizeLocalizer(globalize)
 
@@ -35,6 +36,36 @@ function getEventsFromServer(dispatch)
   .catch(error => console.error('Error:', error));
 }
 
+function getFilteredEvents(dispatch)
+{
+  var url = 'http://localhost:5000/api/giveEvents?event_type=Volunteering';
+  fetch(url,{
+    method: 'GET', // or 'PUT'
+    mode: 'cors',
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
+  .then(response =>dispatch(populate(response)))
+  .catch(error => console.error('Error:', error));
+}
+
+function getFilteredEvents2(dispatch)
+{
+  var url = 'http://localhost:5000/api/giveEvents?event_type=FundRaising';
+  fetch(url,{
+    method: 'GET', // or 'PUT'
+    mode: 'cors',
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
+  .then(response =>dispatch(populate(response)))
+  .catch(error => console.error('Error:', error));
+}
+
+
+
 class EventCalendar extends React.Component {
 
   componentDidMount()
@@ -45,6 +76,16 @@ class EventCalendar extends React.Component {
   showDetails(event, dispatch)
   {
     dispatch(showEventDetails(event))
+  }
+
+  filterVolunteering(dispatch)
+  {
+    getFilteredEvents(dispatch)
+  }
+
+  filterFund(dispatch)
+  {
+    getFilteredEvents2(dispatch)
   }
 
   render()
@@ -63,8 +104,8 @@ class EventCalendar extends React.Component {
       Views = {allViews}
       step = {60}
       showMultiDayTimes
-      defaultDate={new Date(2019, 6, 1)}
-      max={dates.add(dates.endOf(new Date(2020, 6, 1), 'day'), -1, 'hours')}
+      defaultDate={new Date(2019, 9, 1)}
+      max={dates.add(dates.endOf(new Date(2020, 9, 1), 'day'), -1, 'hours')}
       onSelectEvent={event => this.showDetails(event, this.props.dispatch)}
       components={{
           timeSlotWrapper : ColoredDateCellWrapper
@@ -81,6 +122,8 @@ class EventCalendar extends React.Component {
     return (
         <div style= {{height:"800px"}}>
             <Header title="Give Calendar 2019"/>
+            <Button variant=  "contained" color = "primary" style = {{marginLeft: '5px', marginRight : '5px'}} onClick={()=> this.filterVolunteering(this.props.dispatch)}>Filter by Volunteering Events</Button>
+            <Button variant=  "contained" color = "primary" style = {{marginLeft: '5px', marginRight : '5px'}} onClick={()=> this.filterFund(this.props.dispatch)}>Filter by Fund Raising Events</Button>
             {displayItem}
             <AppBar position="fixed" color="default" style={{top:'auto', bottom: 0, height: '40px'}}>
             Please submit your feedback/questions/concerns to Soma (skrishna@microsoft.com)

@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/e49a57da-0299-40c7-81f2-5ea06a3206ab/resourceGroups/somaEventCalendar-client/providers/Microsoft.Web/sites/somaEventCalendarClient",
+    "appService.deploySubpath": ""
+}

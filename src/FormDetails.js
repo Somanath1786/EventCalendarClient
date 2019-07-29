@@ -174,8 +174,8 @@ function FormDetails({dispatch}) {
       />
       <br />
       <br />
-      <Button variant=  "contained" color = "primary" onClick={()=> createEvent(dispatch)}>Create</Button>
-      <Button variant=  "contained" color = "primary" onClick={()=> dismiss(dispatch)}>Cancel</Button>
+      <Button variant=  "contained" color = "primary" style = {{marginLeft: '5px', marginRight : '5px'}} onClick={()=> createEvent(dispatch)}>Create</Button>
+      <Button variant=  "contained" color = "primary" style = {{marginLeft: '5px', marginRight : '5px'}} onClick={()=> dismiss(dispatch)}>Cancel</Button>
     </form>
   );
 }

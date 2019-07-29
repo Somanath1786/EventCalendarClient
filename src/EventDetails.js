@@ -34,12 +34,12 @@ function EventDetails({selectedEvent, dispatch}) {
 
   const getEventDetails = function()
   {
-      let details = '';
+      let details = [];
      for( let detail in selectedEvent)
      {
         if (detail !== '_id' && detail !== '__v' && detail !== 'created_at' && detail !== 'updated_at' && selectedEvent[detail] !== '')
         {
-            details+= detail + ' : ' + selectedEvent[detail] + "\n"
+            details.push( (<Button>{detail.toString()} {selectedEvent[detail].toString()} <br/> </Button>) );
         }
      }
 
@@ -48,15 +48,18 @@ function EventDetails({selectedEvent, dispatch}) {
 
   var details = getEventDetails();
 
+
   return (
     <Card className={classes.card}>
       <CardContent>
         <Typography variant="h3" component="h2">
           {selectedEvent.title}
         </Typography>
-        {details}
+
+       {details}
       </CardContent>
-      <Button variant=  "contained" color = "primary" onClick={()=> dismiss(dispatch)}>OK</Button>
+      <Button variant=  "contained" color = "primary" style = {{marginLeft: '5px', marginRight : '5px'}} onClick={()=> dismiss(dispatch)}>OK</Button>
+      <Button variant=  "contained" color = "primary" style = {{marginLeft: '5px', marginRight : '5px'}}>Add to My Calendar</Button>
 
     </Card>
   );

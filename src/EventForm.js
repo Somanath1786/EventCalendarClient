@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import Form from './FormDetails';
 import { blue } from '@material-ui/core/colors';
 import FHLForm from './FHLForm';
+import EnDFunForm from './EnDFunForm';
+import SummerOfOneForm from './SummerOfOneForm';
 
 const useStyles = makeStyles({
   card: {
@@ -32,6 +34,15 @@ const getFormToDisplay = function(eventForm)
   {
     return <FHLForm />
   }
+  if (eventForm === 'end')
+  {
+    return <EnDFunForm />
+  }
+  if (eventForm === 'summerOfOne')
+  {
+    return <SummerOfOneForm />
+  }
+
 }
 
 export default function EventForm({eventForm}) {

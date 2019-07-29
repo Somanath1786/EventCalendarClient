@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { hideForm, populate, showCalendar } from './store';
+import { populate, showCalendar } from './store';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -23,15 +23,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function FHLForm({dispatch}) {
+function EnDFunForm({dispatch}) {
   const classes = useStyles();
   const [values, setValues] = React.useState({
     title : '',
     start : new Date(),
     end : new Date(),
     location : '',
-    event_type : '',
-    presenter : '',
+    theme : '',
     comments : '',
   });
 
@@ -41,7 +40,7 @@ function FHLForm({dispatch}) {
 
   function logSuccessAndDispatch(response, dispatch)
   {
-    var url = 'http://localhost:5000/api/fhlEvents';
+    var url = 'http://localhost:5000/api/EnDFunEvents';
     fetch(url,{
       method: 'GET', // or 'PUT'
       mode: 'cors',
@@ -66,15 +65,14 @@ function FHLForm({dispatch}) {
   const createEvent = function (dispatch)
   {
     console.log(values);
-    var url = 'http://localhost:5000/api/fhlEvents';
+    var url = 'http://localhost:5000/api/EnDFunEvents';
     var data =
         {
         title : values.title,
         start : values.start,
         end : values.end,
         location : values.location,
-        event_type : values.event_type,
-        presenter : values.presenter,
+        theme : values.theme,
         comments : values.comments
         };
 
@@ -129,22 +127,14 @@ function FHLForm({dispatch}) {
       />
       <br />
        <TextField
-        id="event_type"
-        label="Event Type"
+        id="theme"
+        label="Theme"
         className={classes.textField}
-        value={values.event_type}
-        onChange={handleChange('event_type')}
+        value={values.theme}
+        onChange={handleChange('theme')}
         margin="normal"
       />
-      <br />
-       <TextField
-        id="presenter"
-        label="Presenter"
-        className={classes.textField}
-        value={values.presenter}
-        onChange={handleChange('presenter')}
-        margin="normal"
-      />
+
       <br />
        <TextField
         id="comments"
@@ -157,6 +147,7 @@ function FHLForm({dispatch}) {
         onChange={handleChange('comments')}
         margin="normal"
       />
+
       <br />
       <br />
       <Button variant=  "contained" color = "primary" style = {{marginLeft: '5px', marginRight : '5px'}} onClick={()=> createEvent(dispatch)}>Create</Button>
@@ -172,4 +163,4 @@ function mapStateToProps(state) {
 export default connect(
     mapStateToProps,
     null
-  )(FHLForm);
+  )(EnDFunForm);

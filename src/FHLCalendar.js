@@ -34,7 +34,7 @@ function getEventsFromServer(dispatch)
   .catch(error => console.error('Error:', error));
 }
 
-class EventCalendar extends React.Component {
+class FHLCalendar extends React.Component {
 
 
   componentDidMount()
@@ -102,4 +102,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   null
-)(EventCalendar);
+)(FHLCalendar);

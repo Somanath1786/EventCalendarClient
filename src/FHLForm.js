@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { showCalendar, populate } from './store';
+import { hideForm, populate, showCalendar } from './store';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -23,18 +23,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function FormDetails({dispatch}) {
+function FHLForm({dispatch}) {
   const classes = useStyles();
   const [values, setValues] = React.useState({
     title : '',
     start : new Date(),
     end : new Date(),
-    building : '',
+    location : '',
     event_type : '',
-    vp : '',
-    city : '',
-    designated_charity : '',
-    registration_link : ''
+    presenter : '',
+    comments : '',
   });
 
   const handleChange = name => event => {
@@ -43,7 +41,7 @@ function FormDetails({dispatch}) {
 
   function logSuccessAndDispatch(response, dispatch)
   {
-    var url = 'http://localhost:5000/api/giveEvents';
+    var url = 'http://localhost:5000/api/fhlEvents';
     fetch(url,{
       method: 'GET', // or 'PUT'
       mode: 'cors',
@@ -54,28 +52,30 @@ function FormDetails({dispatch}) {
     .then(response =>dispatch(populate(response)))
     .catch(error => console.error('Error:', error));
 
-    dispatch(showCalendar());
+    //dispatch(hideForm());
+    dispatch(showCalendar())
     console.log(response);
   }
 
   const dismiss = function (dispatch)
   {
-    dispatch(showCalendar());
+    //dispatch(hideForm());
+    dispatch(showCalendar())
   }
 
   const createEvent = function (dispatch)
   {
     console.log(values);
-    var url = 'http://localhost:5000/api/giveEvents';
+    var url = 'http://localhost:5000/api/fhlEvents';
     var data =
         {
         title : values.title,
         start : values.start,
         end : values.end,
-        building : values.building,
+        location : values.location,
         event_type : values.event_type,
-        vp : values.vp,
-        designated_charity : values.designated_charity
+        presenter : values.presenter,
+        comments : values.comments
         };
 
   fetch(url, {
@@ -120,11 +120,11 @@ function FormDetails({dispatch}) {
       />
       <br />
        <TextField
-        id="building"
-        label="Building"
+        id="location"
+        label="Location"
         className={classes.textField}
-        value={values.building}
-        onChange={handleChange('building')}
+        value={values.location}
+        onChange={handleChange('location')}
         margin="normal"
       />
       <br />
@@ -138,38 +138,23 @@ function FormDetails({dispatch}) {
       />
       <br />
        <TextField
-        id="vp"
-        label="VP"
+        id="presenter"
+        label="Presenter"
         className={classes.textField}
-        value={values.vp}
-        onChange={handleChange('vp')}
+        value={values.presenter}
+        onChange={handleChange('presenter')}
         margin="normal"
       />
       <br />
        <TextField
-        id="city"
-        label="City"
+        id="comments"
+        label="Comments"
         className={classes.textField}
-        value={values.city}
-        onChange={handleChange('city')}
-        margin="normal"
-      />
-      <br />
-       <TextField
-        id="designated_charity"
-        label="Designated Charity"
-        className={classes.textField}
-        value={values.designated_charity}
-        onChange={handleChange('designated_charity')}
-        margin="normal"
-      />
-      <br />
-       <TextField
-        id="registration_link"
-        label="Registration Link"
-        className={classes.textField}
-        value={values.registration_link}
-        onChange={handleChange('registration_link')}
+        multiline={true}
+        rows={4}
+        rowsMax={8}
+        value={values.comments}
+        onChange={handleChange('comments')}
         margin="normal"
       />
       <br />
@@ -187,4 +172,4 @@ function mapStateToProps(state) {
 export default connect(
     mapStateToProps,
     null
-  )(FormDetails);
+  )(FHLForm);

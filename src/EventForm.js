@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Form from './FormDetails';
 import { blue } from '@material-ui/core/colors';
+import FHLForm from './FHLForm';
 
 const useStyles = makeStyles({
   card: {
@@ -21,8 +22,22 @@ const useStyles = makeStyles({
   },
 });
 
-export default function EventForm() {
+const getFormToDisplay = function(eventForm)
+{
+  if (eventForm === 'give')
+  {
+    return <Form />
+  }
+  if (eventForm === 'fhl')
+  {
+    return <FHLForm />
+  }
+}
+
+export default function EventForm({eventForm}) {
   const classes = useStyles();
+
+  const form = getFormToDisplay(eventForm);
 
   return (
     <div style={{width: '23%', margin: '0 auto'}}>
@@ -31,7 +46,7 @@ export default function EventForm() {
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           Please fill out the event details
         </Typography>
-        <Form />
+        {form}
       </CardContent>
     </Card>
     </div>

@@ -4,8 +4,9 @@ import { createStore } from 'redux';
 // Add state incrementally and add them only when needed
 const initState =
 {
-    display : false,
-    events :[]
+    itemToDisplay : 'calendar',
+    events :[],
+    selectedEvent : ''
 }
 
 
@@ -15,14 +16,20 @@ export function calendarReducer(state = initState, action=[])
 {
     switch(action.type)
     {
-        case 'SHOW' :
+        case 'CALENDAR' :
         return Object.assign({}, state, {
-            display : true,
+            itemToDisplay : 'calendar',
         });
 
-        case 'HIDE' :
+        case 'FORM' :
         return Object.assign({}, state, {
-            display: false,
+            itemToDisplay : 'form',
+        });
+
+        case 'DETAILS' :
+        return Object.assign({}, state, {
+            itemToDisplay : 'details',
+            selectedEvent : action.eventData
         });
 
         case 'POPULATE' :
@@ -38,16 +45,26 @@ export function calendarReducer(state = initState, action=[])
 // Create a store
 const store = createStore(calendarReducer);
 
-export function showForm(date) {
+export function showCalendar()
+{
     return {
-        type: 'SHOW',
-        };
+        type : 'CALENDAR'
+    }
 }
 
-export function hideForm() {
+export function showCreateForm()
+{
     return {
-        type: 'HIDE',
-    };
+        type : 'FORM'
+    }
+}
+
+export function showEventDetails(event)
+{
+    return {
+        type : 'DETAILS',
+        eventData : event
+    }
 }
 
 export function populate(events)

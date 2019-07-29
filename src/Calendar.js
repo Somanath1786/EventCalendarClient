@@ -6,7 +6,9 @@ import globalize from 'globalize'
 import { connect } from 'react-redux';
 import Header from './Header';
 import EventForm from "./EventForm";
-import {populate} from './store'
+import { showEventDetails, populate } from './store'
+import AppBar from '@material-ui/core/AppBar';
+import EventDetails from "./EventDetails";
 
 const localizer = globalizeLocalizer(globalize)
 
@@ -40,15 +42,20 @@ class EventCalendar extends React.Component {
     getEventsFromServer(this.props.dispatch);
   }
 
+  showDetails(event, dispatch)
+  {
+    dispatch(showEventDetails(event))
+  }
+
   render()
   {
-    const {show, events} = this.props;
+    const {itemToDisplay, events} = this.props;
     var displayItem;
-    if (show === true)
+    if (itemToDisplay === 'form')
     {
-      displayItem = <EventForm />
+      displayItem = <EventForm eventForm="give"/>
     }
-    else
+    if(itemToDisplay === 'calendar')
     {
       displayItem = <Calendar
       style= {{height:"800px"}}
@@ -58,17 +65,26 @@ class EventCalendar extends React.Component {
       showMultiDayTimes
       defaultDate={new Date(2019, 6, 1)}
       max={dates.add(dates.endOf(new Date(2020, 6, 1), 'day'), -1, 'hours')}
-      onSelectEvent={event => alert(event.title)}
+      onSelectEvent={event => this.showDetails(event, this.props.dispatch)}
       components={{
           timeSlotWrapper : ColoredDateCellWrapper
       }}
       localizer={localizer}
       />
     }
+
+    if (itemToDisplay === 'details')
+    {
+      displayItem = <EventDetails />
+    }
+
     return (
         <div style= {{height:"800px"}}>
-            <Header />
+            <Header title="Give Calendar 2019"/>
             {displayItem}
+            <AppBar position="fixed" color="default" style={{top:'auto', bottom: 0, height: '40px'}}>
+            Please submit your feedback/questions/concerns to Soma (skrishna@microsoft.com)
+            </AppBar>
         </div>
     );
   }
@@ -77,7 +93,7 @@ class EventCalendar extends React.Component {
 // Connect the redux store to react
 function mapStateToProps(state) {
   return {
-    show : state.display,
+    itemToDisplay : state.itemToDisplay,
     events : state.events
   };
 }

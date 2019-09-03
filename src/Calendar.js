@@ -11,6 +11,9 @@ import AppBar from '@material-ui/core/AppBar';
 import EventDetails from "./EventDetails";
 import Button from '@material-ui/core/Button';
 
+const { REACT_APP_API_DOMAIN } = process.env
+const BASE_URL = REACT_APP_API_DOMAIN
+
 const localizer = globalizeLocalizer(globalize)
 
 let allViews = Object.keys(Views).map(k => Views[k]);
@@ -24,7 +27,9 @@ const ColoredDateCellWrapper = ({ children }) =>
 
 function getEventsFromServer(dispatch)
 {
-  var url = 'http://localhost:5000/api/giveEvents';
+  console.log(REACT_APP_API_DOMAIN, BASE_URL)
+  //var url = 'http://localhost:5000/api/giveEvents';
+  var url = `${BASE_URL}/api/giveEvents`
   fetch(url,{
     method: 'GET', // or 'PUT'
     mode: 'cors',
@@ -38,7 +43,8 @@ function getEventsFromServer(dispatch)
 
 function getFilteredEvents(dispatch)
 {
-  var url = 'http://localhost:5000/api/giveEvents?event_type=Volunteering';
+  //var url = 'http://localhost:5000/api/giveEvents?event_type=Volunteering';
+  var url = `${BASE_URL}/api/giveEvents?event_type=Volunteering`
   fetch(url,{
     method: 'GET', // or 'PUT'
     mode: 'cors',
@@ -52,7 +58,8 @@ function getFilteredEvents(dispatch)
 
 function getFilteredEvents2(dispatch)
 {
-  var url = 'http://localhost:5000/api/giveEvents?event_type=FundRaising';
+  //var url = 'http://localhost:5000/api/giveEvents?event_type=FundRaising';
+  var url = `${BASE_URL}/api/giveEvents?event_type=FundRaising`
   fetch(url,{
     method: 'GET', // or 'PUT'
     mode: 'cors',

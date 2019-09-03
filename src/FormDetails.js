@@ -5,6 +5,9 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { showCalendar, populate } from './store';
 
+const { REACT_APP_API_DOMAIN } = process.env
+const BASE_URL = REACT_APP_API_DOMAIN
+
 const useStyles = makeStyles(theme => ({
   container: {
     //display: 'flex',
@@ -43,7 +46,8 @@ function FormDetails({dispatch}) {
 
   function logSuccessAndDispatch(response, dispatch)
   {
-    var url = 'http://localhost:5000/api/giveEvents';
+    //var url = 'http://localhost:5000/api/giveEvents';
+    var url = `${BASE_URL}/api/giveEvents`
     fetch(url,{
       method: 'GET', // or 'PUT'
       mode: 'cors',
@@ -66,7 +70,8 @@ function FormDetails({dispatch}) {
   const createEvent = function (dispatch)
   {
     console.log(values);
-    var url = 'http://localhost:5000/api/giveEvents';
+    //var url = 'http://localhost:5000/api/giveEvents';
+    var url = `${BASE_URL}/api/giveEvents`
     var data =
         {
         title : values.title,

@@ -9,6 +9,9 @@ import EventForm from "./EventForm";
 import {populate, showEventDetails} from './store'
 import EventDetails from "./EventDetails";
 
+const { REACT_APP_API_DOMAIN } = process.env
+const BASE_URL = REACT_APP_API_DOMAIN
+
 const localizer = globalizeLocalizer(globalize)
 
 let allViews = Object.keys(Views).map(k => Views[k]);
@@ -22,7 +25,8 @@ const ColoredDateCellWrapper = ({ children }) =>
 
 function getEventsFromServer(dispatch)
 {
-  var url = 'http://localhost:5000/api/summerOfOneEvents';
+  //var url = 'http://localhost:5000/api/summerOfOneEvents';
+  var url = `${BASE_URL}/api/summerOfOneEvents`
   fetch(url,{
     method: 'GET', // or 'PUT'
     mode: 'cors',
